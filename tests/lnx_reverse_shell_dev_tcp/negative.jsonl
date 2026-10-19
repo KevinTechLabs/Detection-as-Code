@@ -1,0 +1,2 @@
+{"Image": "/usr/bin/bash", "CommandLine": "bash -c 'echo > /dev/tcp/192.168.1.10/22 && echo open'", "User": "kevin", "_note": "port check, no shell redirect"}
+{"Image": "/usr/bin/nc", "CommandLine": "nc -zv 192.168.1.10 22", "User": "kevin", "_note": "different binary"}

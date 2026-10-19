@@ -1,0 +1,2 @@
+{"Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "CommandLine": "powershell.exe -ExecutionPolicy Bypass -File C:\\scripts\\inventory.ps1", "User": "CORP\\svc"}
+{"Image": "C:\\Windows\\System32\\cmd.exe", "CommandLine": "cmd.exe /c echo -enc test", "User": "CORP\\jdoe", "_note": "flag text, wrong binary"}

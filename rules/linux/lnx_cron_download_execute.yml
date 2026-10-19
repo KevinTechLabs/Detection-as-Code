@@ -1,0 +1,32 @@
+title: Cron Persistence With Download-and-Execute
+id: e62e37fd-44f9-4df6-9827-6d9cebabbd4e
+status: experimental
+description: |
+  Detects a crontab entry being written that pipes a remote download straight
+  into a shell, a common persistence pattern for cryptominers and botnets.
+references:
+  - https://attack.mitre.org/techniques/T1053/003/
+author: Kevin Marcotte
+date: 2026-10-19
+tags:
+  - attack.persistence
+  - attack.t1053.003
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection_cron:
+    CommandLine|contains:
+      - 'crontab'
+      - '/etc/cron'
+      - '/var/spool/cron'
+  selection_download:
+    CommandLine|contains:
+      - 'curl '
+      - 'wget '
+  selection_pipe:
+    CommandLine|re: '\|\s*(ba|z)?sh\b'
+  condition: all of selection_*
+falsepositives:
+  - Legitimate installers that schedule an update script (review the URL)
+level: high

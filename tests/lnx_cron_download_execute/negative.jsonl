@@ -1,0 +1,2 @@
+{"Image": "/usr/bin/crontab", "CommandLine": "crontab -l", "User": "kevin", "_note": "just listing"}
+{"Image": "/usr/bin/bash", "CommandLine": "bash -c echo '0 3 * * * curl -o /tmp/backup.tgz http://nas.lan/backup.tgz' >> /var/spool/cron/kevin", "User": "kevin", "_note": "download but no pipe to shell"}

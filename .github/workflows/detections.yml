@@ -1,0 +1,67 @@
+name: Detection pipeline
+
+on:
+  push:
+    branches: [main]
+    paths: ["rules/**", "tests/**", "scripts/**", ".github/workflows/**"]
+  pull_request:
+    paths: ["rules/**", "tests/**", "scripts/**", ".github/workflows/**"]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Lint rules (sigma check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Validate Sigma syntax and spec
+        run: sigma check rules/
+
+  test:
+    name: Unit-test rules against sample logs
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Replay positive/negative samples
+        run: python scripts/test_rules.py
+
+  convert:
+    name: Convert to ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    needs: test
+    strategy:
+      matrix:
+        include:
+          - target: lucene        # Wazuh dashboard / OpenSearch / Elastic
+            plugin: elasticsearch
+          - target: splunk
+            plugin: splunk
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: sigma plugin install ${{ matrix.plugin }}
+      - name: Convert every rule
+        run: |
+          mkdir -p build
+          for rule in $(find rules -name '*.yml' | sort); do
+            name=$(basename "$rule" .yml)
+            sigma convert -t ${{ matrix.target }} --without-pipeline "$rule" \
+              -o "build/${name}.${{ matrix.target }}.txt"
+          done
+          ls -l build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queries-${{ matrix.target }}
+          path: build/

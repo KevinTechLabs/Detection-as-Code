@@ -1,0 +1,31 @@
+title: PowerShell Encoded Command
+id: 4cffd9a1-62f3-4ee3-90a3-a2c65a0035cb
+status: experimental
+description: |
+  Detects PowerShell launched with a base64-encoded command, often used to
+  hide a download cradle or stager from casual review.
+references:
+  - https://attack.mitre.org/techniques/T1027/010/
+author: Kevin Marcotte
+date: 2026-10-19
+tags:
+  - attack.defense-evasion
+  - attack.t1027.010
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+  selection_flag:
+    CommandLine|contains:
+      - ' -enc '
+      - ' -encodedcommand '
+      - ' -e '
+      - ' -ec '
+  condition: all of selection_*
+falsepositives:
+  - Some management agents (SCCM, Intune) use encoded commands
+level: medium

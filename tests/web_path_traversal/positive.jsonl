@@ -1,0 +1,2 @@
+{"cs-uri-query": "/download?file=../../../../etc/passwd", "c-ip": "203.0.113.50", "sc-status": 200}
+{"cs-uri-query": "/static/..%2f..%2f..%2fetc/shadow", "c-ip": "203.0.113.50", "sc-status": 403}

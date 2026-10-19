@@ -1,0 +1,31 @@
+title: Local Account Created Outside Config Management
+id: 9b36a7eb-50bd-4c0e-9d6f-bb17fb8a787d
+status: experimental
+description: |
+  Detects useradd/adduser being run interactively. In a homelab managed by
+  config management, new accounts should come from the automation user only.
+references:
+  - https://attack.mitre.org/techniques/T1136/001/
+author: Kevin Marcotte
+date: 2026-10-19
+tags:
+  - attack.persistence
+  - attack.t1136.001
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+      - '/useradd'
+      - '/adduser'
+  filter_automation:
+    ParentImage|endswith: '/ansible-playbook'
+  filter_package_install:
+    ParentImage|endswith:
+      - '/dpkg'
+      - '/apt'
+  condition: selection and not 1 of filter_*
+falsepositives:
+  - Manual account creation by an administrator
+level: medium

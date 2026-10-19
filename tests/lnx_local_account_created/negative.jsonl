@@ -1,0 +1,2 @@
+{"Image": "/usr/sbin/useradd", "CommandLine": "useradd -r -s /usr/sbin/nologin wazuh", "ParentImage": "/usr/bin/dpkg", "User": "root", "_note": "package install"}
+{"Image": "/usr/sbin/useradd", "CommandLine": "useradd -m deploy", "ParentImage": "/usr/bin/ansible-playbook", "User": "root", "_note": "config management"}
