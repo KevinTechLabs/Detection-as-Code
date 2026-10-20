@@ -1,0 +1,3 @@
+{"query": "www.cloudflare.com", "client": "10.20.10.25", "record_type": "A"}
+{"query": "www.google.com", "client": "10.20.10.25", "record_type": "A"}
+{"query": "dns.google.example.org", "client": "10.20.10.25", "record_type": "A", "_note": "exact match only"}

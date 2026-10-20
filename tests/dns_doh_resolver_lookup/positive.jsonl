@@ -1,0 +1,3 @@
+{"query": "cloudflare-dns.com", "client": "10.20.10.25", "record_type": "A", "_note": "finding 9: seen resolving during the hunt"}
+{"query": "doh.dns.apple.com", "client": "10.20.10.31", "record_type": "HTTPS", "_note": "finding 9: seen resolving during the hunt"}
+{"query": "DNS.GOOGLE", "client": "10.20.10.25", "record_type": "A", "_note": "case-insensitive"}

@@ -1,0 +1,4 @@
+{"Image": "/usr/bin/systemctl", "CommandLine": "systemctl stop wazuh-agent", "User": "root", "host": "pi-hole"}
+{"Image": "/usr/bin/systemctl", "CommandLine": "systemctl disable --now wazuh-agent", "User": "root", "host": "kevin-ai"}
+{"Image": "/usr/sbin/service", "CommandLine": "service wazuh-agent stop", "User": "root", "host": "pi-hole"}
+{"Image": "/var/ossec/bin/wazuh-control", "CommandLine": "/var/ossec/bin/wazuh-control stop", "User": "root", "host": "kevin-ai"}

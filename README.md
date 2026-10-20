@@ -1,10 +1,20 @@
 # Detection-as-Code
 
-![Detection pipeline](https://github.com/YOUR_USERNAME/detection-as-code/actions/workflows/detections.yml/badge.svg)
+[![Detection pipeline](https://github.com/KevinTechLabs/detection-as-code/actions/workflows/detections.yml/badge.svg)](https://github.com/KevinTechLabs/detection-as-code/actions/workflows/detections.yml)
 
 Detection rules for my homelab, written in [Sigma](https://github.com/SigmaHQ/sigma), version-controlled, and tested in CI like any other code. Every rule ships with logs that prove it fires on the attack **and** stays quiet on look-alike benign activity. A rule that stops working, or starts firing on noise, fails the build before it ever reaches the SIEM.
 
-Several rules come straight out of my [incident write-up](LINK_TO_YOUR_INCIDENT_REPO): the behaviors found during the investigation became detections, so the same attack gets caught automatically next time.
+Half the rules come straight out of my [October 2026 threat hunt](https://github.com/KevinTechLabs/Homelab-Threat-Hunt). The hunt found detections that were noisy (one was right 1 time in 109) or blind (a stopped sensor alerted at level 3). Each fix is rewritten here as a Sigma rule, and the benign events that caused the noise became its negative tests, so the same mistake can't come back.
+
+## From hunt to rule
+
+| Hunt finding | Problem in production | Rule | Tests built from |
+|---|---|---|---|
+| **H6** · 5,083 "process injection" alerts | 0 requested injection rights; per-app allowlists kept missing new apps | [Explorer opened with injection rights](rules/windows/win_explorer_access_injection_rights.yml): filters on the access mask, not the app | OneDriveSetup, Etcher, MSI and OneDrive masks from the hunt |
+| **H7** · credential search | Right 1 time in 109 | [Credential file search with find/grep](rules/linux/lnx_credential_search_find_grep.yml): matches the arguments, not every `find` | The real Atomic hit vs. `phpsessionclean`, Brave and `grep ^tcp` |
+| **H7** · `/etc/shadow` access | 56 of 68 alerts were PAM and Wazuh | [/etc/shadow read by unexpected binary](rules/linux/lnx_shadow_read_unexpected_binary.yml) | `unix_chkpwd` and `wazuh-syscheckd` |
+| **H2** · sensor went dark for 7 days | Agent stop alerted at level 3 | [Wazuh agent stopped or disabled](rules/linux/lnx_wazuh_agent_stopped.yml): catches the command before the agent goes silent | `stop`/`disable` vs. `restart`/`status` |
+| **Finding 9** · DoH bypasses Pi-hole | `cloudflare-dns.com` still resolved | [DNS-over-HTTPS resolver lookup](rules/dns/dns_doh_resolver_lookup.yml) | Domains seen resolving during the hunt |
 
 ## Pipeline
 
@@ -24,13 +34,18 @@ Converted queries are uploaded as build artifacts on every run.
 
 ## Rules
 
-| Rule | ATT&CK | Level |
-|---|---|---|
-| Bash reverse shell via `/dev/tcp` | T1059.004 | high |
-| Cron persistence with download-and-execute | T1053.003 | high |
-| Local account created outside config management | T1136.001 | medium |
-| PowerShell encoded command | T1027.010 | medium |
-| Path traversal in web request | T1190 | high |
+| Rule | ATT&CK | Level | Source |
+|---|---|---|---|
+| Explorer opened with injection rights | T1055 | high | Hunt H6 |
+| Credential file search with find/grep | T1552.001 | medium | Hunt H7 |
+| /etc/shadow read by unexpected binary | T1003.008 | high | Hunt H7 |
+| Wazuh agent stopped or disabled | T1562.001 | high | Hunt H2 |
+| DNS-over-HTTPS resolver lookup | T1572 | medium | Hunt finding 9 |
+| Bash reverse shell via `/dev/tcp` | T1059.004 | high | Common attack |
+| Cron persistence with download-and-execute | T1053.003 | high | Common attack |
+| Local account created outside config management | T1136.001 | medium | Common attack |
+| PowerShell encoded command | T1027.010 | medium | Common attack |
+| Path traversal in web request | T1190 | high | Common attack |
 
 ## Repo layout
 

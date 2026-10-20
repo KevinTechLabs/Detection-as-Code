@@ -1,0 +1,36 @@
+title: Explorer Opened With Process Injection Rights
+id: 829a15e7-d0cb-45a7-842b-23b33be9160e
+status: experimental
+description: |
+  Detects a process opening explorer.exe with an access mask outside the
+  read-only masks observed in normal use, which means it may have requested
+  PROCESS_CREATE_THREAD, PROCESS_VM_OPERATION or PROCESS_VM_WRITE.
+  Derived from Homelab-Threat-Hunt H6: 5,083 level-12 "injection" alerts, and 0
+  requested write or thread rights. Per-app allowlists (Spotify, OneDrive) kept
+  missing new apps (OneDriveSetup, Etcher, Discord). Filtering on the mask instead
+  of the application covers every benign app and still alerts on real injection.
+references:
+  - https://github.com/KevinTechLabs/Homelab-Threat-Hunt/blob/main/docs/hunt-log.md
+  - https://attack.mitre.org/techniques/T1055/
+author: Kevin Marcotte
+date: 2026-10-20
+tags:
+  - attack.privilege-escalation
+  - attack.defense-evasion
+  - attack.t1055
+logsource:
+  product: windows
+  category: process_access
+detection:
+  selection:
+    TargetImage|endswith: '\explorer.exe'
+  filter_read_only_masks:
+    GrantedAccess:
+      - '0x40'      # PROCESS_DUP_HANDLE
+      - '0x1040'
+      - '0x1410'    # query limited information + query + VM read
+      - '0x101411'
+  condition: selection and not filter_read_only_masks
+falsepositives:
+  - A new benign app using a read-only mask not seen during the hunt (add it to the filter after checking it has no 0x2, 0x8 or 0x20 bits)
+level: high

@@ -1,0 +1,3 @@
+{"name": "/etc/shadow", "exe": "/usr/sbin/unix_chkpwd", "uid": "1000", "host": "kevin-ai", "_note": "H7: PAM sudo password check (45 alerts)"}
+{"name": "/etc/shadow", "exe": "/var/ossec/bin/wazuh-syscheckd", "uid": "0", "host": "pi-hole", "_note": "H7: Wazuh FIM (11 alerts)"}
+{"name": "/etc/passwd", "exe": "/usr/bin/cat", "uid": "1000", "host": "kali", "_note": "different file"}

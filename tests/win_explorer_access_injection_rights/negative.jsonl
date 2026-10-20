@@ -1,0 +1,5 @@
+{"SourceImage": "C:\\Users\\kevin\\AppData\\Local\\Microsoft\\OneDrive\\OneDriveSetup.exe", "TargetImage": "C:\\Windows\\explorer.exe", "GrantedAccess": "0x40", "_note": "H6: OneDriveSetup (2,926 alerts)"}
+{"SourceImage": "C:\\Program Files\\balenaEtcher\\balenaEtcher.exe", "TargetImage": "C:\\Windows\\explorer.exe", "GrantedAccess": "0x40", "_note": "H6: Etcher (1,206 alerts)"}
+{"SourceImage": "C:\\Program Files\\MSI\\MSI.TerminalServer.exe", "TargetImage": "C:\\Windows\\explorer.exe", "GrantedAccess": "0x1410", "_note": "H6: MSI service (54 alerts)"}
+{"SourceImage": "C:\\Users\\kevin\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe", "TargetImage": "C:\\Windows\\explorer.exe", "GrantedAccess": "0x101411", "_note": "H6: OneDrive"}
+{"SourceImage": "C:\\Windows\\Temp\\loader.exe", "TargetImage": "C:\\Windows\\System32\\notepad.exe", "GrantedAccess": "0x1F3FFF", "_note": "different target, out of scope"}

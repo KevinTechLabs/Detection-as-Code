@@ -1,0 +1,35 @@
+title: /etc/shadow Read by Unexpected Binary
+id: 5218916f-4b84-403f-90ce-4944679b41d0
+status: experimental
+description: |
+  Detects /etc/shadow being opened by anything other than the binaries that
+  read it as part of normal Linux operation.
+  Derived from Homelab-Threat-Hunt H7: 45 of 68 alerts were unix_chkpwd (the PAM
+  helper that checks every sudo and login password) and 11 were the Wazuh agent.
+  Excluding exactly those binaries keeps every other reader alerting.
+  Fields follow Wazuh's audit decoder, which merges the SYSCALL exe and PATH name
+  of an auditd event into one record.
+references:
+  - https://github.com/KevinTechLabs/Homelab-Threat-Hunt/blob/main/docs/hunt-log.md
+  - https://attack.mitre.org/techniques/T1003/008/
+author: Kevin Marcotte
+date: 2026-10-20
+tags:
+  - attack.credential-access
+  - attack.t1003.008
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection:
+    name: '/etc/shadow'
+  filter_pam:
+    exe: '/usr/sbin/unix_chkpwd'
+  filter_wazuh:
+    exe:
+      - '/var/ossec/bin/wazuh-syscheckd'
+      - '/var/ossec/bin/wazuh-modulesd'
+  condition: selection and not 1 of filter_*
+falsepositives:
+  - passwd, chage, useradd and similar account tools when run by an administrator
+level: high

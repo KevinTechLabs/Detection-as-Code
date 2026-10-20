@@ -1,0 +1,4 @@
+{"Image": "/usr/bin/systemctl", "CommandLine": "systemctl restart wazuh-agent", "User": "root", "host": "kevin-ai", "_note": "config deploy restart"}
+{"Image": "/usr/bin/systemctl", "CommandLine": "systemctl status wazuh-agent", "User": "kevin", "host": "kevin-ai"}
+{"Image": "/var/ossec/bin/wazuh-control", "CommandLine": "/var/ossec/bin/wazuh-control status", "User": "root", "host": "pi-hole"}
+{"Image": "/usr/bin/systemctl", "CommandLine": "systemctl stop docker", "User": "root", "host": "kevin-ai", "_note": "different service"}
