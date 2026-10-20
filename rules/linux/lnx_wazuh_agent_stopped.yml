@@ -1,0 +1,41 @@
+title: Wazuh Agent Stopped or Disabled
+id: a2f4ef3b-7077-468d-a77c-d80627eb048a
+status: experimental
+description: |
+  Detects a command that stops, disables or masks the Wazuh agent. Stopping the
+  sensor is often an attacker's first move after gaining root.
+  Derived from Homelab-Threat-Hunt H2: an agent stopped and stayed dark for 7 days,
+  and Wazuh logged it at level 3, the same as "USB device attached". The Wazuh
+  rules 100403/100404 catch the outcome on the manager; this rule catches the
+  command on the host, before the agent goes silent.
+references:
+  - https://github.com/KevinTechLabs/Homelab-Threat-Hunt/blob/main/detections/wazuh/hunt_tuning_rules.xml
+  - https://attack.mitre.org/techniques/T1562/001/
+author: Kevin Marcotte
+date: 2026-10-20
+tags:
+  - attack.defense-evasion
+  - attack.t1562.001
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection_svc_tool:
+    Image|endswith:
+      - '/systemctl'
+      - '/service'
+  selection_svc_target:
+    CommandLine|contains: 'wazuh-agent'
+  selection_svc_action:
+    CommandLine|contains:
+      - ' stop'
+      - ' disable'
+      - ' mask'
+      - ' kill'
+  selection_control:
+    Image|endswith: '/wazuh-control'
+    CommandLine|contains: ' stop'
+  condition: (selection_svc_tool and selection_svc_target and selection_svc_action) or selection_control
+falsepositives:
+  - Planned maintenance or agent upgrades (restart is deliberately not matched)
+level: high

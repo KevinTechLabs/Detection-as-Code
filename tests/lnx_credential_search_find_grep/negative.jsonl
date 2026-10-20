@@ -1,0 +1,4 @@
+{"Image": "/usr/bin/find", "CommandLine": "find /var/lib/php/sessions -depth -mindepth 1 -maxdepth 1 -type f -cmin +24 -delete", "host": "kevin-ai", "_note": "H7: phpsessionclean cron (26 alerts)"}
+{"Image": "/usr/bin/find", "CommandLine": "find /usr/share/applications -name brave-browser.desktop", "host": "kevin-ai", "_note": "H7: Brave desktop-entry lookup (25 alerts)"}
+{"Image": "/usr/bin/grep", "CommandLine": "grep ^tcp", "host": "kali", "_note": "H7: short system pipeline (46 alerts)"}
+{"Image": "/usr/bin/grep", "CommandLine": "grep -v lo", "host": "kevin-ai", "_note": "H7: interactive debugging"}

@@ -1,0 +1,2 @@
+{"name": "/etc/shadow", "exe": "/usr/bin/cat", "uid": "0", "host": "kali", "_note": "cat /etc/shadow as root"}
+{"name": "/etc/shadow", "exe": "/usr/bin/python3.12", "uid": "0", "host": "kevin-ai", "_note": "script reading hashes"}

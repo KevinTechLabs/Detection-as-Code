@@ -1,0 +1,3 @@
+{"Image": "/usr/bin/find", "CommandLine": "find / -path */.aws/credentials", "host": "kali", "_note": "H7: the one real hit (Atomic T1552.001, Oct 9)"}
+{"Image": "/usr/bin/grep", "CommandLine": "grep -rni password= /var/www /home", "host": "kevin-ai", "_note": "recursive password grep"}
+{"Image": "/usr/bin/find", "CommandLine": "find /home -name id_rsa -o -name id_ed25519", "host": "kevin-ai", "_note": "SSH private key hunt"}

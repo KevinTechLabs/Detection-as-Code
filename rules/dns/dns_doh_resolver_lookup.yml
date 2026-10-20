@@ -1,0 +1,40 @@
+title: DNS-over-HTTPS Resolver Lookup
+id: e05c9e34-8b08-4ae7-b7da-fe556023a428
+status: experimental
+description: |
+  Detects a client resolving a public DNS-over-HTTPS endpoint. Once a client
+  switches to DoH, its lookups bypass Pi-hole filtering and DNS logging entirely.
+  Derived from Homelab-Threat-Hunt finding 9: cloudflare-dns.com and
+  doh.dns.apple.com still resolved, and pfSense only blocked DoT on port 853.
+  The domain list matches the Pi-hole DoH denylist from that hunt.
+references:
+  - https://github.com/KevinTechLabs/Homelab-Threat-Hunt/blob/main/detections/pihole/doh-denylist.txt
+  - https://attack.mitre.org/techniques/T1572/
+author: Kevin Marcotte
+date: 2026-10-20
+tags:
+  - attack.command-and-control
+  - attack.t1572
+  - attack.t1071.004
+logsource:
+  category: dns
+detection:
+  selection:
+    query:
+      - 'cloudflare-dns.com'
+      - 'mozilla.cloudflare-dns.com'
+      - 'chrome.cloudflare-dns.com'
+      - 'one.one.one.one'
+      - 'dns.google'
+      - 'dns.google.com'
+      - 'doh.dns.apple.com'
+      - 'dns.quad9.net'
+      - 'dns9.quad9.net'
+      - 'dns.nextdns.io'
+      - 'dns.adguard-dns.com'
+      - 'doh.opendns.com'
+      - 'doh.cleanbrowsing.org'
+  condition: selection
+falsepositives:
+  - A local DoH forwarder (cloudflared) on the Pi-hole itself, if it resolves its upstream by name
+level: medium

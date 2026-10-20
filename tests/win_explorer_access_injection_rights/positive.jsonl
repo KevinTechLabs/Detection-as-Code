@@ -1,0 +1,2 @@
+{"SourceImage": "C:\\Users\\Public\\update.exe", "TargetImage": "C:\\Windows\\explorer.exe", "GrantedAccess": "0x1F3FFF", "_note": "PROCESS_ALL_ACCESS"}
+{"SourceImage": "C:\\Windows\\Temp\\loader.exe", "TargetImage": "C:\\Windows\\explorer.exe", "GrantedAccess": "0x143A", "_note": "classic injection mask: create thread + VM op + VM write"}
